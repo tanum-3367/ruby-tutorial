@@ -1,5 +1,5 @@
 module Sequences
-  def self.fromtoby(from, to, by)
+  def self.fromtoby from, to, by
     x = from
     while x <= to
       yield x
@@ -8,8 +8,9 @@ module Sequences
   end
 end
 
-class Range # Open the existing class for additions
-  def by(step)
+# Open the existing class for additions
+class Range
+  def by step
     x = self.begin
     if exclude_end? # For ... ranges that exclude the end
       while x < self.end
@@ -25,5 +26,5 @@ class Range # Open the existing class for additions
   end
 end
 
-(0..10).by(2) { |x| print x }
-(0...10).by(2) { |x| print x }
+(0..10).by(2) {|x| print x}
+(0...10).by(2) {|x| print x}

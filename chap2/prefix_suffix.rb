@@ -1,11 +1,9 @@
 class Person
-  def name=(value)
+  def name= value
     @name = value.strip.capitalize
   end
 
-  def name
-    @name
-  end
+  attr_reader :name
 end
 
 person = Person.new
