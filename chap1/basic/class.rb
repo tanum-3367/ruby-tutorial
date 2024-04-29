@@ -4,9 +4,11 @@ class Sequence
 
   # The initialize method is specical; it is automatically called when a new
   # object is created. It is used to initialize the object's state
-  def initialize(from, to, by)
+  def initialize from, to, by
     # Just save our parameters into instance variables for later use
-    @from, @to, @by = from, to, by # parallel assignment and @ prefix
+    @from = from
+    @to = to
+    @by = by # parallel assignment and @ prefix
   end
 
   # This is the iterator required by the Enumerable module
@@ -22,6 +24,7 @@ class Sequence
   # values in the sequence
   def length
     return 0 if @from > @to
+
     Integer((@to - @from) / @by) + 1
   end
 
@@ -30,27 +33,25 @@ class Sequence
   # alias size length # size is now a synonym for length
 
   # Override the array-access operator to give random access to the sequence
-  def[](index)
-    return nil if index < 0 # Return nil for negative indexes
-    v = @from + index * @by # Compute the value
-    if v <= @to # If it is part of the sequence
-      v
-    else
-      nil
-    end
+  def[] index
+    return nil if index.negative? # Return nil for negative indexes
+
+    v = @from + (index * @by) # Compute the value
+    return unless v <= @to # If it is part of the sequence
+
+    v
   end
 
   # Override arithmetic operators to return new Sequence objects
-  def *(factor)
+  def * factor
     Sequence.new(@from * factor, @to * factor, @by * factor)
   end
 
-  def +(offset)
+  def + offset
     Sequence.new(@from + offset, @to + offset, @by)
   end
-  
 end
 
 s = Sequence.new(1, 10, 2)
-s.each { |x| print x }
+s.each {|x| print x}
 print s[s.length - 1]
